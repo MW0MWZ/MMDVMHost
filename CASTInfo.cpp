@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2016,2018,2020 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2016,2018,2020,2021 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -127,6 +127,16 @@ void CCASTInfo::writeNXDNInt(const char* source, bool group, unsigned int dest, 
 }
 
 void CCASTInfo::clearNXDNInt()
+{
+}
+
+void CCASTInfo::writeM17Int(const char* source, const char* dest, const char* type)
+{
+    if (m_modem != NULL)
+        m_modem->writeM17Info(source, dest, type);
+}
+
+void CCASTInfo::clearM17Int()
 {
 }
 

@@ -1,5 +1,5 @@
 /*
- *	Copyright (C) 2015-2020 Jonathan Naylor, G4KLX
+ *	Copyright (C) 2015-2021 Jonathan Naylor, G4KLX
  *
  *	This program is free software; you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -233,7 +233,7 @@ bool CYSFControl::processVWData(bool valid, unsigned char *data)
 				if (!ret) {
 					LogMessage("YSF, invalid access attempt from %10.10s to DG-ID %u", m_rfSource, dgid);
 					m_rfState = RS_RF_REJECTED;
-					return false;
+					return true;
 				}
 			}
 
@@ -402,7 +402,7 @@ bool CYSFControl::processDNData(bool valid, unsigned char *data)
 				if (!ret) {
 					LogMessage("YSF, invalid access attempt from %10.10s to DG-ID %u", m_rfSource, dgid);
 					m_rfState = RS_RF_REJECTED;
-					return false;
+					return true;
 				}
 			}
 
@@ -598,7 +598,7 @@ bool CYSFControl::processDNData(bool valid, unsigned char *data)
 				if (!ret) {
 					LogMessage("YSF, invalid access attempt from %10.10s to DG-ID %u", m_rfSource, dgid);
 					m_rfState = RS_RF_REJECTED;
-					return false;
+					return true;
 				}
 			}
 
@@ -704,7 +704,7 @@ bool CYSFControl::processFRData(bool valid, unsigned char *data)
 				if (!ret) {
 					LogMessage("YSF, invalid access attempt from %10.10s to DG-ID %u", m_rfSource, dgid);
 					m_rfState = RS_RF_REJECTED;
-					return false;
+					return true;
 				}
 			}
 

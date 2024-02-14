@@ -1,5 +1,5 @@
 /*
- *	Copyright (C) 2015-2020 Jonathan Naylor, G4KLX
+ *	Copyright (C) 2015-2021 Jonathan Naylor, G4KLX
  *
  *	This program is free software; you can redistribute it and/or modify
  *	it under the terms of the GNU General Public License as published by
@@ -214,7 +214,7 @@ bool CNXDNControl::processVoice(unsigned char usc, unsigned char option, unsigne
 				unsigned short srcId = layer3.getSourceUnitId();
 				if (srcId != m_id) {
 					m_rfState = RS_RF_REJECTED;
-					return false;
+					return true;
 				}
 			}
 		} else {
@@ -375,7 +375,7 @@ bool CNXDNControl::processVoice(unsigned char usc, unsigned char option, unsigne
 			if (m_selfOnly) {
 				if (srcId != m_id) {
 					m_rfState = RS_RF_REJECTED;
-					return false;
+					return true;
 				}
 			}
 
@@ -737,7 +737,7 @@ void CNXDNControl::writeEndNet()
 
 void CNXDNControl::writeNetwork()
 {
-	unsigned char netData[40U];
+	unsigned char netData[100U];
 	bool exists = m_network->read(netData);
 	if (!exists)
 		return;

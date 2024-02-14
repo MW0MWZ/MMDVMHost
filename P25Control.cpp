@@ -1,5 +1,5 @@
 /*
-*   Copyright (C) 2016-2019 by Jonathan Naylor G4KLX
+*   Copyright (C) 2016-2019,2021 by Jonathan Naylor G4KLX
 *   Copyright (C) 2018 by Bryan Biedenkapp <gatekeep@gmail.com>
 *
 *   This program is free software; you can redistribute it and/or modify

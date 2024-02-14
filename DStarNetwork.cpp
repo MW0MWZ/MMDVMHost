@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2009-2014,2016,2019,2020 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2009-2014,2016,2019,2020,2021 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,8 +30,8 @@
 
 const unsigned int BUFFER_LENGTH = 100U;
 
-CDStarNetwork::CDStarNetwork(const std::string& gatewayAddress, unsigned short gatewayPort, unsigned short localPort, bool duplex, const char* version, bool debug) :
-m_socket(localPort),
+CDStarNetwork::CDStarNetwork(const std::string& gatewayAddress, unsigned short gatewayPort, const std::string& localAddress, unsigned short localPort, bool duplex, const char* version, bool debug) :
+m_socket(localAddress, localPort),
 m_addr(),
 m_addrLen(0U),
 m_duplex(duplex),

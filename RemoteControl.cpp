@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2019,2021 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2019,2020,2021 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -92,6 +92,8 @@ REMOTE_COMMAND CRemoteControl::getCommand()
 				m_command = RCD_MODE_P25;
 			else if (m_args.at(1U) == "nxdn")
 				m_command = RCD_MODE_NXDN;
+			else if (m_args.at(1U) == "m17")
+				m_command = RCD_MODE_M17;
 			else
 				replyStr = "KO";
 		} else if (m_args.at(0U) == "enable" && m_args.size() >= ENABLE_ARGS) {
@@ -105,8 +107,12 @@ REMOTE_COMMAND CRemoteControl::getCommand()
 				m_command = RCD_ENABLE_P25;
 			else if (m_args.at(1U) == "nxdn")
 				m_command = RCD_ENABLE_NXDN;
+			else if (m_args.at(1U) == "m17")
+				m_command = RCD_ENABLE_M17;
 			else if (m_args.at(1U) == "fm")
 				m_command = RCD_ENABLE_FM;
+			else if (m_args.at(1U) == "ax25")
+				m_command = RCD_ENABLE_AX25;
 			else
 				replyStr = "KO";
 		} else if (m_args.at(0U) == "disable" && m_args.size() >= DISABLE_ARGS) {
@@ -120,8 +126,12 @@ REMOTE_COMMAND CRemoteControl::getCommand()
 				m_command = RCD_DISABLE_P25;
 			else if (m_args.at(1U) == "nxdn")
 				m_command = RCD_DISABLE_NXDN;
+			else if (m_args.at(1U) == "m17")
+				m_command = RCD_DISABLE_M17;
 			else if (m_args.at(1U) == "fm")
 				m_command = RCD_DISABLE_FM;
+			else if (m_args.at(1U) == "ax25")
+				m_command = RCD_DISABLE_AX25;
 			else
 				replyStr = "KO";
 		} else if (m_args.at(0U) == "page" && m_args.size() >= PAGE_ARGS) {
@@ -136,15 +146,14 @@ REMOTE_COMMAND CRemoteControl::getCommand()
 		} else if (m_args.at(0U) == "status") {
 			if (m_host != NULL) {
 				m_host->buildNetworkStatusString(replyStr);
-			}
-			else {
+			} else {
 				replyStr = "KO";
 			}
 
 			m_command = RCD_CONNECTION_STATUS;
-		}
-		else
+		} else {
 			replyStr = "KO";
+		}
 
 		::snprintf(buffer, BUFFER_LENGTH * 2, "%s remote command of \"%s\" received", ((m_command == RCD_NONE) ? "Invalid" : "Valid"), command);
 		if (m_command == RCD_NONE) {
@@ -170,6 +179,7 @@ unsigned int CRemoteControl::getArgCount() const
 		case RCD_MODE_YSF:
 		case RCD_MODE_P25:
 		case RCD_MODE_NXDN:
+		case RCD_MODE_M17:
 			return m_args.size() - SET_MODE_ARGS;
 		case RCD_PAGE:
 			return m_args.size() - 1U;
@@ -190,14 +200,15 @@ std::string CRemoteControl::getArgString(unsigned int n) const
 		case RCD_MODE_YSF:
 		case RCD_MODE_P25:
 		case RCD_MODE_NXDN:
+		case RCD_MODE_M17:
 			n += SET_MODE_ARGS;
 			break;
 		case RCD_PAGE:
 			n += 1U;
 			break;
 		case RCD_CW:
-                        n += 1U;
-                        break;
+			n += 1U;
+			break;
 		default:
 			return "";
 	}

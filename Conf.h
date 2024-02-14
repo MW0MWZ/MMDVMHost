@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2015-2020 by Jonathan Naylor G4KLX
+ *   Copyright (C) 2015-2021 by Jonathan Naylor G4KLX
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -70,9 +70,15 @@ public:
   unsigned int getNXDNIdLookupTime() const;
 
   // The Modem section
-  std::string  getModemPort() const;
   std::string  getModemProtocol() const;
-  unsigned int getModemAddress() const;
+  std::string  getModemUARTPort() const;
+  unsigned int getModemUARTSpeed() const;
+  std::string  getModemI2CPort() const;
+  unsigned int getModemI2CAddress() const;
+  std::string  getModemModemAddress() const;
+  unsigned short getModemModemPort() const;
+  std::string  getModemLocalAddress() const;
+  unsigned short getModemLocalPort() const;
   bool         getModemRXInvert() const;
   bool         getModemTXInvert() const;
   bool         getModemPTTInvert() const;
@@ -90,8 +96,10 @@ public:
   float        getModemYSFTXLevel() const;
   float        getModemP25TXLevel() const;
   float        getModemNXDNTXLevel() const;
+  float        getModemM17TXLevel() const;
   float        getModemPOCSAGTXLevel() const;
   float        getModemFMTXLevel() const;
+  float        getModemAX25TXLevel() const;
   std::string  getModemRSSIMappingFile() const;
   bool         getModemUseCOSAsLockout() const;
   bool         getModemTrace() const;
@@ -103,10 +111,6 @@ public:
   unsigned short getTransparentRemotePort() const;
   unsigned short getTransparentLocalPort() const;
   unsigned int getTransparentSendFrameType() const;
-
-  // The UMP section
-  bool         getUMPEnabled() const;
-  std::string  getUMPPort() const;
 
   // The D-Star section
   bool         getDStarEnabled() const;
@@ -168,9 +172,25 @@ public:
   unsigned int getNXDNTXHang() const;
   unsigned int getNXDNModeHang() const;
 
+  // The M17 section
+  bool         getM17Enabled() const;
+  unsigned int getM17CAN() const;
+  bool         getM17SelfOnly() const;
+  bool         getM17AllowEncryption() const;
+  unsigned int getM17TXHang() const;
+  unsigned int getM17ModeHang() const;
+
   // The POCSAG section
   bool         getPOCSAGEnabled() const;
   unsigned int getPOCSAGFrequency() const;
+
+  // The AX.25 section
+  bool         getAX25Enabled() const;
+  unsigned int getAX25TXDelay() const;
+  int          getAX25RXTwist() const;
+  unsigned int getAX25SlotTime() const;
+  unsigned int getAX25PPersist() const;
+  bool         getAX25Trace() const;
 
   // The FM Section
   bool         getFMEnabled() const;
@@ -200,15 +220,21 @@ public:
   unsigned int getFMKerchunkTime() const;
   unsigned int getFMHangTime() const;
   unsigned int getFMAccessMode() const;
+  bool         getFMLinkMode() const;
   bool         getFMCOSInvert() const;
+  bool         getFMNoiseSquelch() const;
+  unsigned int getFMSquelchHighThreshold() const;
+  unsigned int getFMSquelchLowThreshold() const;
   unsigned int getFMRFAudioBoost() const;
   float        getFMMaxDevLevel() const;
   unsigned int getFMExtAudioBoost() const;
+  unsigned int getFMModeHang() const;
 
   // The D-Star Network section
   bool         getDStarNetworkEnabled() const;
   std::string  getDStarGatewayAddress() const;
   unsigned short getDStarGatewayPort() const;
+  std::string  getDStarLocalAddress() const;
   unsigned short getDStarLocalPort() const;
   unsigned int getDStarNetworkModeHang() const;
   bool         getDStarNetworkDebug() const;
@@ -216,9 +242,10 @@ public:
   // The DMR Network section
   bool         getDMRNetworkEnabled() const;
   std::string  getDMRNetworkType() const;
-  std::string  getDMRNetworkAddress() const;
-  unsigned short getDMRNetworkPort() const;
-  unsigned short getDMRNetworkLocal() const;
+  std::string  getDMRNetworkRemoteAddress() const;
+  unsigned short getDMRNetworkRemotePort() const;
+  std::string  getDMRNetworkLocalAddress() const;
+  unsigned short getDMRNetworkLocalPort() const;
   std::string  getDMRNetworkPassword() const;
   std::string  getDMRNetworkOptions() const;
   bool         getDMRNetworkDebug() const;
@@ -229,8 +256,8 @@ public:
 
   // The System Fusion Network section
   bool         getFusionNetworkEnabled() const;
-  std::string  getFusionNetworkMyAddress() const;
-  unsigned short getFusionNetworkMyPort() const;
+  std::string  getFusionNetworkLocalAddress() const;
+  unsigned short getFusionNetworkLocalPort() const;
   std::string  getFusionNetworkGatewayAddress() const;
   unsigned short getFusionNetworkGatewayPort() const;
   unsigned int getFusionNetworkModeHang() const;
@@ -240,6 +267,7 @@ public:
   bool         getP25NetworkEnabled() const;
   std::string  getP25GatewayAddress() const;
   unsigned short getP25GatewayPort() const;
+  std::string  getP25LocalAddress() const;
   unsigned short getP25LocalPort() const;
   unsigned int getP25NetworkModeHang() const;
   bool         getP25NetworkDebug() const;
@@ -254,6 +282,15 @@ public:
   unsigned int getNXDNNetworkModeHang() const;
   bool         getNXDNNetworkDebug() const;
 
+  // The M17 Network section
+  bool         getM17NetworkEnabled() const;
+  std::string  getM17GatewayAddress() const;
+  unsigned short getM17GatewayPort() const;
+  std::string  getM17LocalAddress() const;
+  unsigned short getM17LocalPort() const;
+  unsigned int getM17NetworkModeHang() const;
+  bool         getM17NetworkDebug() const;
+
   // The POCSAG Network section
   bool         getPOCSAGNetworkEnabled() const;
   std::string  getPOCSAGGatewayAddress() const;
@@ -262,6 +299,26 @@ public:
   unsigned short getPOCSAGLocalPort() const;
   unsigned int getPOCSAGNetworkModeHang() const;
   bool         getPOCSAGNetworkDebug() const;
+
+  // The FM Network section
+  bool         getFMNetworkEnabled() const;
+  std::string  getFMNetworkProtocol() const;
+  std::string  getFMGatewayAddress() const;
+  unsigned short getFMGatewayPort() const;
+  std::string  getFMLocalAddress() const;
+  unsigned short getFMLocalPort() const;
+  bool         getFMPreEmphasis() const;
+  bool         getFMDeEmphasis() const;
+  float        getFMTXAudioGain() const;
+  float        getFMRXAudioGain() const;
+  unsigned int getFMNetworkModeHang() const;
+  bool         getFMNetworkDebug() const;
+
+  // The AX.25 Network section
+  bool         getAX25NetworkEnabled() const;
+  std::string  getAX25NetworkPort() const;
+  unsigned int getAX25NetworkSpeed() const;
+  bool         getAX25NetworkDebug() const;
 
   // The TFTSERIAL section
   std::string  getTFTSerialPort() const;
@@ -348,9 +405,15 @@ private:
   std::string  m_nxdnIdLookupFile;
   unsigned int m_nxdnIdLookupTime;
 
-  std::string  m_modemPort;
   std::string  m_modemProtocol;
-  unsigned int m_modemAddress;
+  std::string  m_modemUARTPort;
+  unsigned int m_modemUARTSpeed;
+  std::string  m_modemI2CPort;
+  unsigned int m_modemI2CAddress;
+  std::string  m_modemModemAddress;
+  unsigned short m_modemModemPort;
+  std::string  m_modemLocalAddress;
+  unsigned short m_modemLocalPort;
   bool         m_modemRXInvert;
   bool         m_modemTXInvert;
   bool         m_modemPTTInvert;
@@ -368,8 +431,10 @@ private:
   float        m_modemYSFTXLevel;
   float        m_modemP25TXLevel;
   float        m_modemNXDNTXLevel;
+  float        m_modemM17TXLevel;
   float        m_modemPOCSAGTXLevel;
   float        m_modemFMTXLevel;
+  float        m_modemAX25TXLevel;
   std::string  m_modemRSSIMappingFile;
   bool         m_modemUseCOSAsLockout;
   bool         m_modemTrace;
@@ -380,9 +445,6 @@ private:
   unsigned short m_transparentRemotePort;
   unsigned short m_transparentLocalPort;
   unsigned int m_transparentSendFrameType;
-
-  bool         m_umpEnabled;
-  std::string  m_umpPort;
 
   bool         m_dstarEnabled;
   std::string  m_dstarModule;
@@ -439,6 +501,13 @@ private:
   unsigned int m_nxdnTXHang;
   unsigned int m_nxdnModeHang;
 
+  bool         m_m17Enabled;
+  unsigned int m_m17CAN;
+  bool         m_m17SelfOnly;
+  bool         m_m17AllowEncryption;
+  unsigned int m_m17TXHang;
+  unsigned int m_m17ModeHang;
+
   bool         m_pocsagEnabled;
   unsigned int m_pocsagFrequency;
 
@@ -469,23 +538,37 @@ private:
   unsigned int m_fmKerchunkTime;
   unsigned int m_fmHangTime;
   unsigned int m_fmAccessMode;
+  bool         m_fmLinkMode;
   bool         m_fmCOSInvert;
+  bool         m_fmNoiseSquelch;
+  unsigned int m_fmSquelchHighThreshold;
+  unsigned int m_fmSquelchLowThreshold;
   unsigned int m_fmRFAudioBoost;
   float        m_fmMaxDevLevel;
   unsigned int m_fmExtAudioBoost;
+  unsigned int m_fmModeHang;
+
+  bool         m_ax25Enabled;
+  unsigned int m_ax25TXDelay;
+  int          m_ax25RXTwist;
+  unsigned int m_ax25SlotTime;
+  unsigned int m_ax25PPersist;
+  bool         m_ax25Trace;
 
   bool         m_dstarNetworkEnabled;
   std::string  m_dstarGatewayAddress;
   unsigned short m_dstarGatewayPort;
+  std::string  m_dstarLocalAddress;
   unsigned short m_dstarLocalPort;
   unsigned int m_dstarNetworkModeHang;
   bool         m_dstarNetworkDebug;
 
   bool         m_dmrNetworkEnabled;
   std::string  m_dmrNetworkType;
-  std::string  m_dmrNetworkAddress;
-  unsigned short m_dmrNetworkPort;
-  unsigned short m_dmrNetworkLocal;
+  std::string  m_dmrNetworkRemoteAddress;
+  unsigned short m_dmrNetworkRemotePort;
+  std::string  m_dmrNetworkLocalAddress;
+  unsigned short m_dmrNetworkLocalPort;
   std::string  m_dmrNetworkPassword;
   std::string  m_dmrNetworkOptions;
   bool         m_dmrNetworkDebug;
@@ -495,8 +578,8 @@ private:
   unsigned int m_dmrNetworkModeHang;
 
   bool         m_fusionNetworkEnabled;
-  std::string  m_fusionNetworkMyAddress;
-  unsigned short m_fusionNetworkMyPort;
+  std::string  m_fusionNetworkLocalAddress;
+  unsigned short m_fusionNetworkLocalPort;
   std::string  m_fusionNetworkGatewayAddress;
   unsigned short m_fusionNetworkGatewayPort;
   unsigned int m_fusionNetworkModeHang;
@@ -505,6 +588,7 @@ private:
   bool         m_p25NetworkEnabled;
   std::string  m_p25GatewayAddress;
   unsigned short m_p25GatewayPort;
+  std::string  m_p25LocalAddress;
   unsigned short m_p25LocalPort;
   unsigned int m_p25NetworkModeHang;
   bool         m_p25NetworkDebug;
@@ -518,6 +602,14 @@ private:
   unsigned int m_nxdnNetworkModeHang;
   bool         m_nxdnNetworkDebug;
 
+  bool         m_m17NetworkEnabled;
+  std::string  m_m17GatewayAddress;
+  unsigned short m_m17GatewayPort;
+  std::string  m_m17LocalAddress;
+  unsigned short m_m17LocalPort;
+  unsigned int m_m17NetworkModeHang;
+  bool         m_m17NetworkDebug;
+
   bool         m_pocsagNetworkEnabled;
   std::string  m_pocsagGatewayAddress;
   unsigned short m_pocsagGatewayPort;
@@ -525,6 +617,24 @@ private:
   unsigned short m_pocsagLocalPort;
   unsigned int m_pocsagNetworkModeHang;
   bool         m_pocsagNetworkDebug;
+
+  bool         m_fmNetworkEnabled;
+  std::string  m_fmNetworkProtocol;
+  std::string  m_fmGatewayAddress;
+  unsigned short m_fmGatewayPort;
+  std::string  m_fmLocalAddress;
+  unsigned short m_fmLocalPort;
+  bool         m_fmPreEmphasis;
+  bool         m_fmDeEmphasis;
+  float        m_fmTXAudioGain;
+  float        m_fmRXAudioGain;
+  unsigned int m_fmNetworkModeHang;
+  bool         m_fmNetworkDebug;
+
+  bool         m_ax25NetworkEnabled;
+  std::string  m_ax25NetworkPort;
+  unsigned int m_ax25NetworkSpeed;
+  bool         m_ax25NetworkDebug;
 
   std::string  m_tftSerialPort;
   unsigned int m_tftSerialBrightness;
